@@ -26,35 +26,14 @@ class Main extends Component {
       form: { lat, lng, waterTemperature, pressure, ph }
     } = this.state;
     const { data } = await axios.post("https://algalbloom.herokuapp.com/api/", {
-      data: {
-        lat,
-        lng,
-        waterTemperature,
-        pressure,
-        ph
-      },
-      headers: {
-        "Access-Control-Allow-Origin": "*`",
-        "Content-Type": "application/json",
-        Connection: "keep-alive",
-        credentials: "include",
-        "Access-Control-Allow-Headers": [
-          "Origin",
-          "Content-Type",
-          "X-Auth-Token"
-        ],
-        "Access-Control-Allow-Methods": [
-          "GET",
-          "POST",
-          "PATCH",
-          "PUT",
-          "DELETE",
-          "OPTIONS"
-        ]
-      }
+      lat,
+      lng,
+      waterTemperature,
+      pressure,
+      ph
     });
 
-    return await data.text();
+    return data;
   };
 
   setLatLng = (lat, lng) =>

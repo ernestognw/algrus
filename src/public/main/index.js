@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { Steps, Step, StepContent } from "components/templates/steps";
 import Map from "./components/map";
 import GeneralData from "./components/general-data";
@@ -15,12 +16,31 @@ class Main extends Component {
         lng: -100.2898143,
         waterTemperature: 19.0,
         pressure: 1021,
-        airTemperature: 16.0,
-        salinity: 14.0,
         ph: 6.0
       }
     };
   }
+
+  getPrediction = async () => {
+    const {
+      form: { lat, lng, waterTemperature, pressure, ph }
+    } = this.state;
+    const { data } = await axios.post("https://algalbloom.herokuapp.com/api/", {
+      data: {
+        lat,
+        lng,
+        waterTemperature,
+        pressure,
+        ph
+      },
+      headers: {
+        "Access-Control-Allow-Origin": "*`",
+        "Content-Type": "application/json"
+      }
+    });
+
+    return await data.text();
+  };
 
   setLatLng = (lat, lng) =>
     this.setState(({ form }) => ({ form: { ...form, lat, lng } }));
@@ -31,27 +51,13 @@ class Main extends Component {
   setPressure = pressure =>
     this.setState(({ form }) => ({ form: { ...form, pressure } }));
 
-  setAirTemperature = airTemperature =>
-    this.setState(({ form }) => ({ form: { ...form, airTemperature } }));
-
-  setSalinity = salinity =>
-    this.setState(({ form }) => ({ form: { ...form, salinity } }));
-
   setPh = ph => this.setState(({ form }) => ({ form: { ...form, ph } }));
 
   goTo = target => this.setState({ current: target });
 
   render() {
     const {
-      form: {
-        lat,
-        lng,
-        waterTemperature,
-        pressure,
-        airTemperature,
-        salinity,
-        ph
-      },
+      form: { lat, lng, waterTemperature, pressure, ph },
       current
     } = this.state;
     return (
@@ -84,15 +90,11 @@ class Main extends Component {
             waterTemperature={waterTemperature}
             setPressure={this.setPressure}
             pressure={pressure}
-            setAirTemperature={this.setAirTemperature}
-            airTemperature={airTemperature}
-            current={current}
-            setSalinity={this.setSalinity}
-            salinity={salinity}
             setPh={this.setPh}
             ph={ph}
+            current={current}
           />
-          <Result />
+          <Result getPrediction={this.getPrediction} />
         </StepContent>
       </Container>
     );

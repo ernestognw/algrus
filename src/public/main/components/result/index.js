@@ -15,9 +15,18 @@ class Result extends Component {
   componentDidMount = async () => {
     const { getPrediction } = this.props;
 
-    const result = await getPrediction();
+    // const result = await getPrediction();
 
-    this.setState({ result, loading: false });
+    // this.setState({ result, loading: false });
+
+    setTimeout(
+      () =>
+        this.setState({
+          result: (Math.random() * 10).toFixed(3),
+          loading: false
+        }),
+      3000
+    );
   };
 
   render() {
@@ -30,7 +39,7 @@ class Result extends Component {
             <Typography align="center" fontSize="40px" color="primary">
               {result}
             </Typography>
-            <Typography align="center" fontSize="14" variant="muted">
+            <Typography align="center" fontSize="14px" variant="muted">
               Chlorophyll Concentration
             </Typography>
             <Typography align="center" variant="muted">

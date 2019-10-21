@@ -35,7 +35,22 @@ class Main extends Component {
       },
       headers: {
         "Access-Control-Allow-Origin": "*`",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Connection: "keep-alive",
+        credentials: "include",
+        "Access-Control-Allow-Headers": [
+          "Origin",
+          "Content-Type",
+          "X-Auth-Token"
+        ],
+        "Access-Control-Allow-Methods": [
+          "GET",
+          "POST",
+          "PATCH",
+          "PUT",
+          "DELETE",
+          "OPTIONS"
+        ]
       }
     });
 

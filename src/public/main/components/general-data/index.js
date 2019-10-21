@@ -35,7 +35,7 @@ const GeneralData = ({
         <Typography marginT="30" marginB="5" variant="heading">
           Pressure
         </Typography>
-        <Typography variant="muted">Bar</Typography>
+        <Typography variant="muted">miliBar</Typography>
         <Range
           marginT="-20"
           marginB="50"
